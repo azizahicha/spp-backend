@@ -1,11 +1,21 @@
 import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBody } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        username: { type: 'string', example: 'admin2' },
+        password: { type: 'string', example: 'admin123' },
+      },
+    },
+  })
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(@Request() req) {
