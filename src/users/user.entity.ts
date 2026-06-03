@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Siswa } from '../siswa/siswa.entity';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -21,4 +22,8 @@ export class User {
 
   @Column({ nullable: true })
   siswaId: number;
+
+  @ManyToOne(() => Siswa, { nullable: true, eager: false })
+  @JoinColumn({ name: 'siswaId' })
+  siswa: Siswa;
 }
