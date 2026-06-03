@@ -11,7 +11,7 @@ export class AuthController {
     schema: {
       type: 'object',
       properties: {
-        username: { type: 'string', example: 'admin2' },
+        username: { type: 'string', example: 'admin' },
         password: { type: 'string', example: 'admin123' },
       },
     },
@@ -22,6 +22,17 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        username: { type: 'string', example: 'siswa1' },
+        password: { type: 'string', example: 'siswa123' },
+        role: { type: 'string', example: 'siswa' },
+        siswaId: { type: 'number', example: 1 },
+      },
+    },
+  })
   @Post('register')
   async register(@Body() body: { username: string; password: string; role: string; siswaId?: number }) {
     return this.authService.register(body.username, body.password, body.role, body.siswaId);
