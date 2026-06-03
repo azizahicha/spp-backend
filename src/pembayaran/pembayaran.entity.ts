@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm';
 import { Siswa } from '../siswa/siswa.entity';
 
 export enum StatusPembayaran {
@@ -11,7 +11,8 @@ export class Pembayaran {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Siswa, (s) => s.pembayaran, { eager: true })
+  @ManyToOne(() => Siswa, (s) => s.pembayaran, { eager: true, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'siswaId' })
   siswa: Siswa;
 
   @Column()
