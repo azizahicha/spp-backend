@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, SetMetadata, Query } from '@nestjs/common';
 import { SiswaService } from './siswa.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
@@ -13,6 +13,10 @@ export class SiswaController {
   @Get()
   @SetMetadata('roles', ['admin'])
   findAll() { return this.siswaService.findAll(); }
+
+  @Get('search')
+  @SetMetadata('roles', ['admin'])
+  search(@Query('q') q: string) { return this.siswaService.search(q); }
 
   @Get(':id')
   @SetMetadata('roles', ['admin'])

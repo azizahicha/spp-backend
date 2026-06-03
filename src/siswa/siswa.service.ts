@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { Siswa } from './siswa.entity';
 
 @Injectable()
@@ -13,6 +13,15 @@ export class SiswaService {
     const s = await this.siswaRepo.findOne({ where: { id } });
     if (!s) throw new NotFoundException('Siswa tidak ditemukan');
     return s;
+  }
+
+  async search(q: string) {
+    return this.siswaRepo.find({
+      where: [
+        { nama: Like(`%${q}%`) },
+        { nis: Like(`%${q}%`) },
+      ],
+    });
   }
 
   create(data: Partial<Siswa>) { return this.siswaRepo.save(this.siswaRepo.create(data)); }
